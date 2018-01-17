@@ -1,0 +1,23 @@
+<div class="container">
+	<div class="row">
+		<div class="col-sm-10 col-sm-offset-1">
+			<table class="table">
+				<% @blogs.each do |b| %>
+					<tr>
+						<td>
+							<h1><%= link_to b.title, blog_path(b.id) %></h1>
+							<% diff_mins = (Time.now - b.created_at) / 60 %>
+							<p>Publicado por <%= b.user.email %> hace <%= diff_mins.to_i %> minutos</p>
+							<p><%= b.body[0,255] %></p>
+							<% if user_signed_in? &&
+								current_user.id == b.user_id %>
+								<p><%= link_to "Editar", edit_blog_path(b.id) %>
+								<%= link_to "Eliminar", b, method: :delete %></p>
+							<% end %>
+						</td>
+					</tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
+</div>
