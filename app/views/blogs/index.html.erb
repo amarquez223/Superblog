@@ -7,9 +7,14 @@
 						<td>
 							<h1><%= link_to b.title, blog_path(b.id) %></h1>
 							<% diff_mins = (Time.now - b.created_at) / 60 %>
-							<p><%= b.comments.count %> comentario(s)</p>
-							<p>Publicado por <%= b.user.email %> hace <%= diff_mins.to_i %> minutos</p>
-							<p><%= b.body[0,255] %></p>
+							<h3><small><%= b.comments.count %> comentario(s)</small></h3>
+							<h3><small>Publicado por <%= b.user.email %> hace <%= diff_mins.to_i %> minuto(s)</small></h3>
+							<% if b.body.length > 250 %>
+							<%	puntos = "..." %>
+							<% else %>
+							<% 	puntos = "" %>
+							<% end %>
+							<p><%= markdown(b.body[0,249] + puntos) %></p>
 							<% if user_signed_in? &&
 								current_user.id == b.user_id %>
 								<p><%= link_to "Editar", edit_blog_path(b.id) %>

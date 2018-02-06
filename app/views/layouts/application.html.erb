@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <title>SuperBlog</title>
     <%= csrf_meta_tags %>
 
@@ -19,20 +20,35 @@
               <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" href="#"><strong>Superblog</strong></a>
-            <% if user_signed_in? %>
-          		<a class="navbar-default" href="#">Usuario actual: <%= current_user.email %> </a>
-          		<a class="navbar-default" href="#"><%= link_to "Nuevo Post", new_blog_path %> </a>
-          		<a class="navbar-default" href="#"><%= link_to "Salir", destroy_user_session_path, method: :delete %></a>
-          	<% else %>
-          		<a class="navbar-default" href="#"><%= link_to "Ingresar", new_user_session_path %></a>
-          		<a class="navbar-default" href="#"><%= link_to "Registrarse", new_user_registration_path %></a>
-          	<% end %>
+            <ul class="navbar-nav navbar-right">
+              <% if user_signed_in? %>
+            		<li class="nav-item">
+                  <a class="nav-link" href="#">Usuario actual: <%= current_user.email %> </a>
+                </li>
+            		<li class="nav-item">
+                <a class="nav-link" href="#"><%= link_to "Nuevo Post", new_blog_path %> </a>
+            		</li>
+                <li class="nav-item">
+                <a class="nav-link" href="#"><%= link_to "Salir", destroy_user_session_path, method: :delete %></a>
+                </li>
+              <% else %>
+            		<li class="nav-item">
+                <a class="nav-link" href="#"><%= link_to "Ingresar", new_user_session_path %></a>
+            		</li>
+                <li class="nav-item">
+                <a class="nav-link" href="#"><%= link_to "Registrarse", new_user_registration_path %></a>
+            	  </li>
+              <% end %>
+            </ul>
           </div>
         </div>
       </nav>
+
           
     <p class="notice"><%= notice %></p>
   	<p class="alert"><%= alert %></p>
-  	<%= yield %>
+  
+    <%= yield %>
+  
   </body>
 </html>

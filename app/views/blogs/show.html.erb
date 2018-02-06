@@ -1,36 +1,42 @@
 <div class="container">
 	<div class="row">
-		<h3><%= link_to "Volver", blogs_path %></h1>
-		<h1><%= @blog.title %></h1>
-		<p><%= @blog.body %></p>
-		<% diff_mins_blog = (Time.now - @blog.created_at) / 60 %>
-		<p>Publicado por <%= @blog.user.email %> hace <%= diff_mins_blog.to_i %> minutos</p>
+		<div class="col-sm-6 col-sm-offset-3">
+			<h3><%= link_to "Volver", blogs_path %></h3>
+			<h1><%= @blog.title %></h1>
+			<p><%= markdown(@blog.body) %></p>
+			<% diff_mins_blog = (Time.now - @blog.created_at) / 60 %>
+			<p>Publicado por <%= @blog.user.email %> hace <%= diff_mins_blog.to_i %> minutos</p>
+		</div>
 	</div>
 </div>
 <div class="container">
 	<div class="row">
-		<% @blog.comments.each do |c| %>
-				<h3><%= c.comment_body %></h3>
-				<% diff_mins_comment = (Time.now - c.created_at) / 60 %>
-				<p>Comentado por <%= c.user.email %> hace <%= diff_mins_comment.to_i %> minutos</p>
+		<div class="col-sm-6 col-sm-offset-3">
+			<% @blog.comments.order(:created_at).each do |c| %>
+					<h3><%= c.comment_body %></h3>
+					<% diff_mins_comment = (Time.now - c.created_at) / 60 %>
+					<p>Comentado por <%= c.user.email %> hace <%= diff_mins_comment.to_i %> minutos</p>
 		<% end %>
+		</div>
 	</div>
 </div>
 
 <% if user_signed_in? %>
 	<div class="container">
 		<div class="row">
-			<h1>Nuevo Comentario: </h1>
-	      	<%= form_for Comment.new, :url => comments_path do |c| %>
-	      		<div class="form-group">
-	          		<%= c.text_field :comment_body, class: "form-control input-lg", placeholder: "Haz tu comentario" %>
-	          	</div>
-	          		<%= c.hidden_field :user_id, value: current_user.id %>
-	          		<%= c.hidden_field :blog_id, value: @blog.id %>
-	        	<div>
-	        	  <%= c.submit "Comentar", class: "btn btn-primary btn-lg btn-block" %>
-	        	</div>
-	      	<% end %>
+			<div class="col-sm-6 col-sm-offset-3">
+				<h3>Nuevo Comentario: </h3>
+		      	<%= form_for Comment.new, :url => comments_path do |c| %>
+		      		<div class="form-group">
+		          		<%= c.text_field :comment_body, class: "form-control input-lg", placeholder: "Haz tu comentario" %>
+		          	</div>
+		          		<%= c.hidden_field :user_id, value: current_user.id %>
+		          		<%= c.hidden_field :blog_id, value: @blog.id %>
+		        	<div>
+		        	  <%= c.submit "Comentar", class: "btn btn-primary btn-lg btn-block" %>
+		        	</div>
+		      	<% end %>
+		    </div>
 		</div>
 	</div>
 <% end %>
