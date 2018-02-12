@@ -16,6 +16,8 @@ class BlogsController < ApplicationController
 		@blog = Blog.new(blog_params)
 		if @blog.save
 			redirect_to blogs_path
+		else
+			render :new
 		end
 	end
 
@@ -26,7 +28,9 @@ class BlogsController < ApplicationController
 	def update
 		@blog = Blog.find(params[:id])
 		if @blog.update(blog_params)
-			redirect_to blogs_path
+			redirect_to blogs_path, notice: "El post fue actualizado exitosamente"
+		else
+			render :edit
 		end
 	
 	end
@@ -34,7 +38,7 @@ class BlogsController < ApplicationController
 	def destroy
 		blog = Blog.find(params[:id])
 		if blog.destroy
-			redirect_to blogs_path
+			redirect_to blogs_path, notice: "El post fue eliminado exitosamente"
 		end
 	end
 

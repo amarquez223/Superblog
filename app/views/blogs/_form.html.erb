@@ -2,6 +2,15 @@
   <div class="row">
     <div class="col-sm-6 col-sm-offset-3">
       <h1><%= form_title %></h1>
+
+      <div>
+        <ul id="error_frame">
+          <li class="error_msg" id="err_title">Título no puede estar en blanco</li>
+          <li class="error_msg" id="err_body01">Cuerpo no puede estar en blanco</li>
+          <li class="error_msg" id="err_body02">Cuerpo es demasiado corto (250 caracteres mínimo)</li>
+        </ul>
+      </div>
+
       <%= form_for @blog do |b| %>
         <div class="form-group">
           Título: <%= b.text_field :title, class: "form-control input-lg", placeholder: "Ingresa el título del Post" %>
