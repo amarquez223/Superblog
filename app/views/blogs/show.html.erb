@@ -1,21 +1,25 @@
 <div class="container">
 	<div class="row">
-		<div class="col-sm-6 col-sm-offset-3">
+		<div class="col-sm-8 col-sm-offset-2">
 			<h3><%= link_to "Volver", blogs_path %></h3>
 			<h1><%= @blog.title %></h1>
 			<p><%= markdown(@blog.body) %></p>
-			<% diff_mins_blog = (Time.now - @blog.created_at) / 60 %>
-			<p>Publicado por <%= @blog.user.email %> hace <%= diff_mins_blog.to_i %> minutos</p>
 		</div>
 	</div>
 </div>
 <div class="container">
 	<div class="row">
-		<div class="col-sm-6 col-sm-offset-3">
+		<div class="col-sm-8 col-sm-offset-2">
 			<% @blog.comments.order(:created_at).each do |c| %>
-					<h3><%= c.comment_body %></h3>
-					<% diff_mins_comment = (Time.now - c.created_at) / 60 %>
-					<p>Comentado por <%= c.user.email %> hace <%= diff_mins_comment.to_i %> minutos</p>
+					<table class="table table-bordered">
+						<thead>
+							<tr><th>
+								<div><%= c.user.email %> comentó hace <%= time_ago(c.created_at) %></th></tr>
+						</thead>
+						<tbody>
+							<tr><td><%= c.comment_body %></td></tr>
+						</tbody>
+					</table>
 		<% end %>
 		</div>
 	</div>
@@ -24,8 +28,8 @@
 <% if user_signed_in? %>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-6 col-sm-offset-3">
-				<h3>Nuevo Comentario: </h3>
+			<div class="col-sm-8 col-sm-offset-2">
+				Nuevo Comentario:
 		      	<%= form_for Comment.new, :url => comments_path do |c| %>
 		      		<div class="form-group">
 		          		<%= c.text_field :comment_body, class: "form-control input-lg", placeholder: "Haz tu comentario" %>

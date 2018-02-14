@@ -4,4 +4,5 @@ class Blog < ApplicationRecord
 	validates :title, presence: true
 	validates :body, presence: true
 	validates :body, length: {minimum: 250}
+
 end

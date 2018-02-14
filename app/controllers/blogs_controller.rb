@@ -15,7 +15,7 @@ class BlogsController < ApplicationController
 	def create
 		@blog = Blog.new(blog_params)
 		if @blog.save
-			redirect_to blogs_path
+			redirect_to blogs_path, notice: "El post fue adicionado correctamente"
 		else
 			render :new
 		end
@@ -37,8 +37,12 @@ class BlogsController < ApplicationController
 
 	def destroy
 		blog = Blog.find(params[:id])
-		if blog.destroy
-			redirect_to blogs_path, notice: "El post fue eliminado exitosamente"
+		if blog.comments.count > 0
+			redirect_to blogs_path, notice: "El post tiene comentarios. No es posible eliminarlo"
+		else
+			if blog.destroy
+				redirect_to blogs_path, notice: "El post fue eliminado exitosamente"
+			end
 		end
 	end
 

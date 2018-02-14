@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <title>SuperBlog</title>
     <%= csrf_meta_tags %>
 
@@ -10,45 +10,33 @@
   </head>
 
   <body>
-  	<nav class="navbar navbar-static-top navbar-default">
-        <div class="container">
+  	<nav class="navbar navbar-default">
+        <div class="container-fluid">
           <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
             <a class="navbar-brand" href="#"><strong>Superblog</strong></a>
-            <ul class="navbar-nav navbar-right">
-              <% if user_signed_in? %>
-            		<li class="nav-item">
-                  <a class="nav-link" href="#">Usuario actual: <%= current_user.email %> </a>
-                </li>
-            		<li class="nav-item">
-                <a class="nav-link" href="#"><%= link_to "Nuevo Post", new_blog_path %> </a>
-            		</li>
-                <li class="nav-item">
-                <a class="nav-link" href="#"><%= link_to "Salir", destroy_user_session_path, method: :delete %></a>
-                </li>
-              <% else %>
-            		<li class="nav-item">
-                <a class="nav-link" href="#"><%= link_to "Ingresar", new_user_session_path %></a>
-            		</li>
-                <li class="nav-item">
-                <a class="nav-link" href="#"><%= link_to "Registrarse", new_user_registration_path %></a>
-            	  </li>
-              <% end %>
-            </ul>
+            <% if user_signed_in? %>
+              <a class="navbar-brand" href="#"><strong>Usuario actual: <%= current_user.email %></strong></a>
+            <% end %>
           </div>
+          <ul class="nav navbar-nav navbar-right">
+              <% if user_signed_in? %>
+            		<li><a href="#"><%= link_to "Nuevo Post", new_blog_path %> </a></li>
+                <li><a href="#"><%= link_to "Salir", destroy_user_session_path, method: :delete %></a></li>
+              <% else %>
+            		<li><a href="#"><%= link_to "Ingresar", new_user_session_path %></a></li>
+                <li><a href="#"><%= link_to "Registrarse", new_user_registration_path %></a></li>
+              <% end %>
+          </ul>
+          
         </div>
       </nav>
 
           
-    <p class="notice"><%= notice %></p>
-  	<p class="alert"><%= alert %></p>
-  
-    <%= yield %>
-  
+    <% if flash[:notice] %>
+      <p class="alert alert-info"><%= flash[:notice] %></p>
+    <% end %>
+
+  	<%= yield %>
+    
   </body>
 </html>
