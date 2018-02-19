@@ -26,6 +26,18 @@
         <div class="actions">
           <%= f.submit t('.sign_in') %>
         </div>
+
+        <div class="errtext">
+          <% flash.each do |name, msg| %>
+            <% if msg.class == Array %>
+              <% msg.each do |message| %>
+                <%= content_tag :div, message, :id => "flash_#{name}" %>
+              <% end %>
+            <% else %>
+              <%= content_tag :div, msg, :id => "flash_#{name}" %>
+            <% end %>
+          <% end %>
+        </div>
       <% end %>
 
       <%= render "devise/shared/links" %>
